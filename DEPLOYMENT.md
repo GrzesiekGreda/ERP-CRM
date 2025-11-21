@@ -16,10 +16,10 @@
 
 ### Metoda 2: FTP/SFTP
 **Dane do połączenia (uzyskaj od dostawcy hostingu):**
-- Serwer: ftp.greda.pl (lub podobny)
+- Serwer: serwer2514332.home.pl
 - Port: 21 (FTP) lub 22 (SFTP)
-- Login: [twoj_login]
-- Hasło: [twoje_hasło]
+- Login: [magula@greda.pl]
+- Hasło: [GREDASpzoo112025]
 
 **Kroki:**
 1. Uruchom FileZilla, WinSCP lub inny klient FTP
