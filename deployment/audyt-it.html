@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audyt IT - GREDA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        .audyt-content {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(0, 10, 30, 0.5);
+            backdrop-filter: blur(3px);
+            border-radius: 20px;
+            box-shadow: 
+                0 0 30px rgba(65, 105, 225, 0.3),
+                inset 0 0 50px rgba(30, 144, 255, 0.1);
+            color: #fff;
+        }
+        .audyt-title {
+            font-size: 2.5rem;
+            color: #4169e1;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #4169e1;
+        }
+        .audyt-subtitle {
+            font-size: 1.3rem;
+            color: #87ceeb;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        .service-section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(65, 105, 225, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            color: #1e90ff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title::before {
+            content: "🔍";
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+            display: flex;
+            align-items: center;
+        }
+        .feature-list li::before {
+            content: "✓";
+            color: #00bfff;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .process-step {
+            background: rgba(30, 144, 255, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #1e90ff;
+        }
+        .step-number {
+            font-size: 2rem;
+            color: #4169e1;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #4169e1, #1e90ff);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(65, 105, 225, 0.3);
+        }
+        @media (max-width: 768px) {
+            .audyt-content {
+                margin: 20px;
+                padding: 25px;
+            }
+            .audyt-title {
+                font-size: 2rem;
+            }
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animowane tło kosmiczne -->
+    <div class="stars-background" id="starsBackground"></div>
+    
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <h1 class="company-name">GREDA</h1>
+                </div>
+            </div>
+        </header>
+
+        <div class="audyt-content">
+            <h1 class="audyt-title">Audyt IT</h1>
+            <p class="audyt-subtitle">Kompleksowa analiza i przygotowanie do wdrożenia zaawansowanego systemu monitoringu</p>
+            
+            <div class="service-section">
+                <h2 class="section-title">Czym jest Audyt IT?</h2>
+                <p>Audyt IT to kompleksowa analiza Twojej infrastruktury informatycznej, mająca na celu przygotowanie do wdrożenia nowoczesnego systemu monitoringu i zarządzania. Nasza usługa obejmuje szczegółową ocenę obecnego stanu systemów oraz opracowanie strategii implementacji rozwiązań zapewniających ciągłość działania i proaktywne zarządzanie zasobami IT.</p>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title">Zakres Audytu</h2>
+                <ul class="feature-list">
+                    <li>Analiza architektury serwerowej i sieciowej</li>
+                    <li>Ocena zabezpieczeń i podatności systemów</li>
+                    <li>Inwentaryzacja sprzętu i oprogramowania</li>
+                    <li>Analiza wydajności i obciążenia zasobów</li>
+                    <li>Ocena procedur backup i disaster recovery</li>
+                    <li>Przegląd dokumentacji technicznej</li>
+                    <li>Analiza kosztów utrzymania IT</li>
+                    <li>Identyfikacja punktów krytycznych</li>
+                </ul>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title">System Monitoringu Enterprise</h2>
+                <p>W ramach audytu przygotowujemy Twoją organizację do wdrożenia zaawansowanego systemu monitoringu opartego na sprawdzonych rozwiązaniach enterprise. System ten zapewnia:</p>
+                <ul class="feature-list">
+                    <li>Monitoring w czasie rzeczywistym 24/7</li>
+                    <li>Automatyczne alertowanie o problemach</li>
+                    <li>Predykcyjną analizę trendów</li>
+                    <li>Szczegółowe raporty wydajności</li>
+                    <li>Integrację z istniejącymi systemami</li>
+                    <li>Skalowalne rozwiązanie dla różnych środowisk</li>
+                    <li>Interfejs webowy dostępny z każdego miejsca</li>
+                    <li>Zaawansowane metryki i dashboardy</li>
+                </ul>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title">Proces Implementacji</h2>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">01</div>
+                        <h3>Analiza Wstępna</h3>
+                        <p>Szczegółowy przegląd infrastruktury, identyfikacja wymagań i celów biznesowych</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">02</div>
+                        <h3>Projektowanie</h3>
+                        <p>Opracowanie architektury systemu monitoringu dostosowanej do specyfiki organizacji</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">03</div>
+                        <h3>Przygotowanie</h3>
+                        <p>Konfiguracja środowiska, przygotowanie serwerów i instalacja komponentów systemu</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">04</div>
+                        <h3>Wdrożenie</h3>
+                        <p>Implementacja systemu, konfiguracja monitoringu i testowanie wszystkich funkcji</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">05</div>
+                        <h3>Szkolenia</h3>
+                        <p>Przeszkolenie zespołu IT z obsługi systemu i interpretacji danych monitoringu</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">06</div>
+                        <h3>Wsparcie</h3>
+                        <p>Ciągłe wsparcie techniczne, aktualizacje i optymalizacja systemu</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title">Korzyści dla Organizacji</h2>
+                <ul class="feature-list">
+                    <li>Redukcja czasu przestojów o nawet 90%</li>
+                    <li>Proaktywne wykrywanie problemów przed ich wystąpieniem</li>
+                    <li>Optymalizacja wydajności systemów i aplikacji</li>
+                    <li>Centralne zarządzanie całą infrastrukturą IT</li>
+                    <li>Szczegółowe raporty dla kadry zarządzającej</li>
+                    <li>Compliance z wymogami branżowymi i regulacyjnymi</li>
+                    <li>Znaczna redukcja kosztów operacyjnych IT</li>
+                    <li>Zwiększenie bezpieczeństwa danych i systemów</li>
+                </ul>
+            </div>
+
+            <a href="index.html" class="back-button">← Powrót do strony głównej</a>
+        </div>
+
+        <footer class="footer">
+            <div class="contact-info">
+                <p>&copy; 2025 GREDA. Wszystkie prawa zastrzeżone.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

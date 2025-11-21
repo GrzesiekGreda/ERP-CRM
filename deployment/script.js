@@ -1,5 +1,86 @@
+// Generowanie realistycznego tła kosmicznego 3D
+function createStarsBackground() {
+    const starsContainer = document.getElementById('starsBackground');
+    
+    // Tworzenie gwiazd 3D lecących do przodu
+    for (let i = 0; i < 300; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Pozycjonowanie w kole wokół centrum (perspektywa tunelu)
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 400 + 100;
+        const x = Math.cos(angle) * radius + window.innerWidth / 2;
+        const y = Math.sin(angle) * radius + window.innerHeight / 2;
+        
+        star.style.left = x + 'px';
+        star.style.top = y + 'px';
+        
+        // Różne rozmiary gwiazd
+        const size = Math.random() * 3 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        
+        // Różne prędkości
+        const duration = Math.random() * 3 + 2;
+        star.style.animationDuration = duration + 's';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        
+        starsContainer.appendChild(star);
+    }
+    
+    // Tworzenie tunelu warp speed
+    for (let i = 0; i < 12; i++) {
+        const tunnelLine = document.createElement('div');
+        tunnelLine.className = 'warp-tunnel';
+        
+        const angle = (i / 12) * Math.PI * 2;
+        const radius = 300;
+        const x = Math.cos(angle) * radius + window.innerWidth / 2;
+        const y = Math.sin(angle) * radius + window.innerHeight / 2;
+        
+        tunnelLine.style.left = x + 'px';
+        tunnelLine.style.top = '0px';
+        tunnelLine.style.transformOrigin = `0 ${window.innerHeight / 2}px`;
+        tunnelLine.style.transform = `rotateZ(${angle}rad)`;
+        
+        const duration = Math.random() * 2 + 3;
+        tunnelLine.style.animationDuration = duration + 's';
+        tunnelLine.style.animationDelay = Math.random() * 2 + 's';
+        
+        starsContainer.appendChild(tunnelLine);
+    }
+    
+    // Tworzenie mgławic w tle
+    for (let i = 0; i < 8; i++) {
+        const nebula = document.createElement('div');
+        nebula.className = 'nebula';
+        
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 600 + 200;
+        const x = Math.cos(angle) * radius + window.innerWidth / 2;
+        const y = Math.sin(angle) * radius + window.innerHeight / 2;
+        
+        nebula.style.left = x + 'px';
+        nebula.style.top = y + 'px';
+        
+        const size = Math.random() * 150 + 100;
+        nebula.style.width = size + 'px';
+        nebula.style.height = size + 'px';
+        
+        const duration = Math.random() * 10 + 10;
+        nebula.style.animationDuration = duration + 's';
+        nebula.style.animationDelay = Math.random() * 5 + 's';
+        
+        starsContainer.appendChild(nebula);
+    }
+}
+
 // Animacja logo przy załadowaniu strony
 document.addEventListener('DOMContentLoaded', function() {
+    // Inicjalizacja tła kosmicznego
+    createStarsBackground();
+    
     const logo = document.querySelector('.logo');
     const companyName = document.querySelector('.company-name');
     const heroContent = document.querySelector('.hero-content');

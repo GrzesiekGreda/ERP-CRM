@@ -9,14 +9,177 @@ body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     color: #333;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    background: #000;
     min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Efekt świecenia centrum ekranu - punkt ucieczki */
+body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: #87ceeb;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    box-shadow: 
+        0 0 20px #87ceeb,
+        0 0 40px #4169e1,
+        0 0 60px #1e90ff,
+        0 0 80px #00bfff;
+    animation: centerPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes centerPulse {
+    0% { 
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 1;
+    }
+}
+
+/* Animowane tło 3D - lot przez kosmos do przodu */
+.stars-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    perspective: 1000px;
+    background: radial-gradient(ellipse at center, #001122 0%, #000 70%);
+}
+
+/* Gwiazdy 3D lecące do przodu */
+.star {
+    position: absolute;
+    background: #87ceeb;
+    border-radius: 50%;
+    animation: flyForward linear infinite;
+    box-shadow: 0 0 6px #87ceeb, 0 0 12px #4169e1, 0 0 18px #1e90ff;
+}
+
+.star:nth-child(2n) {
+    background: #4169e1;
+    box-shadow: 0 0 4px #4169e1, 0 0 8px #1e90ff;
+}
+
+.star:nth-child(3n) {
+    background: #1e90ff;
+    box-shadow: 0 0 8px #1e90ff, 0 0 16px #87ceeb;
+}
+
+.star:nth-child(4n) {
+    background: #00bfff;
+    box-shadow: 0 0 5px #00bfff, 0 0 10px #87ceeb;
+}
+
+.star:nth-child(5n) {
+    background: #add8e6;
+    box-shadow: 0 0 3px #add8e6, 0 0 6px #87ceeb;
+}
+
+/* Animacja lotu 3D do przodu */
+@keyframes flyForward {
+    0% {
+        transform: translateZ(-1000px) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateZ(1000px) scale(10);
+        opacity: 0;
+    }
+}
+
+/* Linie tunelu warp speed */
+.warp-tunnel {
+    position: absolute;
+    width: 2px;
+    height: 100vh;
+    background: linear-gradient(to bottom, 
+        transparent 0%, 
+        #4169e1 20%, 
+        #1e90ff 50%, 
+        #87ceeb 80%, 
+        transparent 100%);
+    animation: tunnelMove linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes tunnelMove {
+    0% {
+        transform: translateZ(-500px) rotateZ(0deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+    }
+    80% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateZ(500px) rotateZ(180deg);
+        opacity: 0;
+    }
+}
+
+/* Efekt mgławicy w tle */
+.nebula {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(65,105,225,0.3) 0%, transparent 70%);
+    animation: nebulaFloat linear infinite;
+    filter: blur(3px);
+}
+
+.nebula:nth-child(even) {
+    background: radial-gradient(circle, rgba(30,144,255,0.2) 0%, transparent 70%);
+    animation-duration: 15s;
+}
+
+@keyframes nebulaFloat {
+    0% {
+        transform: translateZ(-2000px) scale(0.1);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateZ(1000px) scale(2);
+        opacity: 0;
+    }
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    position: relative;
+    z-index: 1;
+    background: rgba(0, 10, 30, 0.4);
+    backdrop-filter: blur(2px);
+    border-radius: 20px;
+    box-shadow: 
+        0 0 30px rgba(65, 105, 225, 0.3),
+        inset 0 0 50px rgba(30, 144, 255, 0.1);
 }
 
 /* Header i logo */

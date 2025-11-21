@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wsparcie IT - GREDA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        .wsparcie-content {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(0, 10, 30, 0.5);
+            backdrop-filter: blur(3px);
+            border-radius: 20px;
+            box-shadow: 
+                0 0 30px rgba(65, 105, 225, 0.3),
+                inset 0 0 50px rgba(30, 144, 255, 0.1);
+            color: #fff;
+        }
+        .wsparcie-title {
+            font-size: 2.5rem;
+            color: #4169e1;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #4169e1;
+        }
+        .wsparcie-subtitle {
+            font-size: 1.3rem;
+            color: #87ceeb;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        .experience-badge {
+            background: linear-gradient(45deg, #1e90ff, #4169e1);
+            padding: 15px 25px;
+            border-radius: 30px;
+            text-align: center;
+            margin: 30px auto;
+            max-width: 500px;
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.5);
+            border: 2px solid rgba(135, 206, 235, 0.5);
+        }
+        .experience-badge h3 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        .service-section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(65, 105, 225, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            color: #1e90ff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title.network::before { content: "🌐"; margin-right: 10px; }
+        .section-title.datacenter::before { content: "🏢"; margin-right: 10px; }
+        .section-title.hardware::before { content: "💻"; margin-right: 10px; }
+        .section-title.service::before { content: "🔧"; margin-right: 10px; }
+        .section-title.security::before { content: "🛡️"; margin-right: 10px; }
+        .section-title.monitoring::before { content: "👁️"; margin-right: 10px; }
+        .section-title.pentest::before { content: "🎯"; margin-right: 10px; }
+        .section-title.development::before { content: "💡"; margin-right: 10px; }
+        .section-title.backup::before { content: "💾"; margin-right: 10px; }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+            display: flex;
+            align-items: center;
+        }
+        .feature-list li::before {
+            content: "✓";
+            color: #00bfff;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .service-card-detail {
+            background: rgba(30, 144, 255, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #1e90ff;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .service-card-detail:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(30, 144, 255, 0.2);
+        }
+        .card-title {
+            font-size: 1.2rem;
+            color: #4169e1;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .highlight-box {
+            background: rgba(0, 20, 50, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid rgba(30, 144, 255, 0.3);
+        }
+        .highlight-title {
+            font-size: 1.3rem;
+            color: #00bfff;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #4169e1, #1e90ff);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(65, 105, 225, 0.3);
+        }
+        @media (max-width: 768px) {
+            .wsparcie-content {
+                margin: 20px;
+                padding: 25px;
+            }
+            .wsparcie-title {
+                font-size: 2rem;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animowane tło kosmiczne -->
+    <div class="stars-background" id="starsBackground"></div>
+    
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <h1 class="company-name">GREDA</h1>
+                </div>
+            </div>
+        </header>
+
+        <div class="wsparcie-content">
+            <h1 class="wsparcie-title">Wsparcie IT</h1>
+            <p class="wsparcie-subtitle">Kompleksowa obsługa klienta - od projektowania po bezpieczeństwo</p>
+            
+            <div class="experience-badge">
+                <h3>🏆 Ponad 10 lat doświadczenia w branży IT</h3>
+                <p style="margin: 10px 0 0 0; font-size: 0.9rem; opacity: 0.9;">Certyfikowany specjalista - pełen zakres usług informatycznych</p>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title network">Projektowanie i Budowa Sieci</h2>
+                <p>Kompleksowe projektowanie i implementacja nowoczesnych sieci komputerowych dostosowanych do specyfiki Twojej organizacji. Realizujemy projekty od małych sieci biurowych po zaawansowane infrastruktury enterprise.</p>
+                
+                <div class="services-grid">
+                    <div class="service-card-detail">
+                        <div class="card-title">Projektowanie Sieci</div>
+                        <ul class="feature-list">
+                            <li>Analiza wymagań biznesowych i technicznych</li>
+                            <li>Projektowanie topologii sieci LAN/WAN</li>
+                            <li>Planowanie adresacji IP i segmentacji VLAN</li>
+                            <li>Dobór optymalnego sprzętu sieciowego</li>
+                        </ul>
+                    </div>
+                    <div class="service-card-detail">
+                        <div class="card-title">Implementacja</div>
+                        <ul class="feature-list">
+                            <li>Instalacja i konfiguracja urządzeń sieciowych</li>
+                            <li>Okablowanie strukturalne kat. 6/6A/7</li>
+                            <li>Konfiguracja routingu i przełączania</li>
+                            <li>Testy wydajności i bezpieczeństwa</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title datacenter">Modernizacja Serwerowni</h2>
+                <p>Profesjonalne porządkowanie i modernizacja serwerowni z wykorzystaniem zaawansowanych rozwiązań okablowania. Oferujemy rozwiązania od budżetowych po premium, zawsze z zachowaniem najwyższych standardów organizacji.</p>
+                
+                <div class="highlight-box">
+                    <div class="highlight-title">Autoryzowany Dystrybutor Systemów Okablowania</div>
+                    <p>Jako autoryzowany dystrybutor zaawansowanych systemów kasetowych, oferujemy najnowocześniejsze rozwiązania do organizacji okablowania w szafach serwerowych i punktach dystrybucyjnych.</p>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-card-detail">
+                        <div class="card-title">Rozwiązania Budżetowe</div>
+                        <ul class="feature-list">
+                            <li>Wysokiej jakości patchcordy w atrakcyjnych cenach</li>
+                            <li>Profesjonalne oznaczenia kolorystyczne</li>
+                            <li>Organizery kabli i prowadnice</li>
+                            <li>Dokumentacja połączeń</li>
+                        </ul>
+                    </div>
+                    <div class="service-card-detail">
+                        <div class="card-title">Systemy Premium</div>
+                        <ul class="feature-list">
+                            <li>Zaawansowane kasety okablowania</li>
+                            <li>Modułowe systemy zarządzania kablami</li>
+                            <li>Inteligentne prowadnice z możliwością śledzenia</li>
+                            <li>Pełna dokumentacja i etykietowanie</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title hardware">Wyposażanie Stanowisk Komputerowych</h2>
+                <p>Kompleksowe wyposażanie organizacji w sprzęt komputerowy. Dzięki bezpośrednim kontaktom z dostawcami oferujemy konkurencyjne ceny przy zachowaniu najwyższej jakości produktów.</p>
+                
+                <div class="services-grid">
+                    <div class="service-card-detail">
+                        <div class="card-title">Komputery i Laptopy</div>
+                        <ul class="feature-list">
+                            <li>Stacje robocze dostosowane do zastosowań</li>
+                            <li>Laptopy biznesowe i mobilne</li>
+                            <li>Serwery i infrastruktura datacenter</li>
+                            <li>Konfiguracje na zamówienie</li>
+                        </ul>
+                    </div>
+                    <div class="service-card-detail">
+                        <div class="card-title">Peryferyjne i Akcesoria</div>
+                        <ul class="feature-list">
+                            <li>Monitory profesjonalne i gaming</li>
+                            <li>Drukarki i urządzenia wielofunkcyjne</li>
+                            <li>Urządzenia sieciowe i zabezpieczające</li>
+                            <li>Akcesoria biurowe i ergonomiczne</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title service">Serwis Komputerowy</h2>
+                <p>Profesjonalny serwis sprzętu komputerowego oparty na ponad 10-letnim doświadczeniu prowadzenia autorskiego serwisu komputerowego. Zapewniamy kompleksowe wsparcie techniczne dla firm i użytkowników indywidualnych.</p>
+                
+                <div class="highlight-box">
+                    <div class="highlight-title">10+ Lat Doświadczenia w Serwisie</div>
+                    <p>Wieloletnie prowadzenie profesjonalnego serwisu komputerowego "ESIEK Serwis Komputerowy" - tysiące naprawionych urządzeń i zadowolonych klientów. Działalność prowadzona we współpracy z firmą Vobis S.A. jako autoryzowany serwis tej firmy.</p>
+                </div>
+
+                <ul class="feature-list">
+                    <li>Diagnostyka i naprawa komputerów stacjonarnych i laptopów</li>
+                    <li>Serwis gwarancyjny i pogwarancyjny</li>
+                    <li>Odzyskiwanie danych z uszkodzonych nośników</li>
+                    <li>Modernizacja i upgrade sprzętu</li>
+                    <li>Serwis on-site w siedzibie klienta</li>
+                    <li>Wsparcie techniczne zdalne i telefoniczne</li>
+                    <li>Konserwacja i przeglądy planowe</li>
+                    <li>Doradztwo w zakresie zakupu nowego sprzętu</li>
+                </ul>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title security">System Antywirusowy Enterprise</h2>
+                <p>Implementacja i zarządzanie zaawansowanymi systemami antywirusowymi z centralnym zarządzaniem opartymi na rozwiązaniach ESET. Oferujemy pełną ochronę przed zagrożeniami cybernetycznymi dla organizacji każdej wielkości.</p>
+                
+                <div class="services-grid">
+                    <div class="service-card-detail">
+                        <div class="card-title">Centralne Zarządzanie</div>
+                        <ul class="feature-list">
+                            <li>Konsola administracyjna ESET PROTECT</li>
+                            <li>Zarządzanie politykami bezpieczeństwa</li>
+                            <li>Automatyczne aktualizacje i raporty</li>
+                            <li>Monitoring zagrożeń w czasie rzeczywistym</li>
+                        </ul>
+                    </div>
+                    <div class="service-card-detail">
+                        <div class="card-title">Zaawansowana Ochrona</div>
+                        <ul class="feature-list">
+                            <li>Ochrona przed malware i ransomware</li>
+                            <li>Firewall i kontrola sieci</li>
+                            <li>Ochrona poczty elektronicznej</li>
+                            <li>Bezpieczeństwo urządzeń mobilnych</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title monitoring">System SIEM i XDR</h2>
+                <p>Implementacja zaawansowanego systemu zarządzania informacjami i zdarzeniami bezpieczeństwa (SIEM) oraz rozszerzonej detekcji i reakcji (XDR) opartego na platformie Wazuh. Zapewniamy proaktywne wykrywanie i reakcję na zagrożenia bezpieczeństwa.</p>
+                
+                <div class="services-grid">
+                    <div class="service-card-detail">
+                        <div class="card-title">SIEM - Security Information</div>
+                        <ul class="feature-list">
+                            <li>Centralizacja i analiza logów bezpieczeństwa</li>
+                            <li>Korelacja zdarzeń z różnych źródeł</li>
+                            <li>Automatyczne alertowanie o zagrożeniach</li>
+                            <li>Compliance z regulacjami branżowymi</li>
+                        </ul>
+                    </div>
+                    <div class="service-card-detail">
+                        <div class="card-title">XDR - Extended Detection</div>
+                        <ul class="feature-list">
+                            <li>Wykrywanie zaawansowanych zagrożeń APT</li>
+                            <li>Analiza behawioralna użytkowników</li>
+                            <li>Automatyczna reakcja na incydenty</li>
+                            <li>Threat hunting i forensics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title pentest">Testy Penetracyjne</h2>
+                <p>Profesjonalne testy penetracyjne mające na celu identyfikację luk w zabezpieczeniach systemów informatycznych. Przeprowadzamy kompleksowe audyty bezpieczeństwa zgodnie z najlepszymi praktykami branżowymi.</p>
+                
+                <ul class="feature-list">
+                    <li>Testy penetracyjne aplikacji webowych (OWASP Top 10)</li>
+                    <li>Audyt bezpieczeństwa infrastruktury sieciowej</li>
+                    <li>Testy socjotechniczne i phishing</li>
+                    <li>Audyt konfiguracji systemów i usług</li>
+                    <li>Testy bezpieczeństwa urządzeń IoT</li>
+                    <li>Analiza kodu źródłowego aplikacji</li>
+                    <li>Szczegółowe raporty z rekomendacjami</li>
+                    <li>Wsparcie w usuwaniu wykrytych podatności</li>
+                </ul>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title development">Tworzenie Oprogramowania</h2>
+                <p>Projektowanie i implementacja dedykowanych rozwiązań programistycznych dostosowanych do specyficznych potrzeb biznesowych. Realizujemy projekty od prostych aplikacji po złożone systemy enterprise.</p>
+                
+                <div class="services-grid">
+                    <div class="service-card-detail">
+                        <div class="card-title">Aplikacje Webowe</div>
+                        <ul class="feature-list">
+                            <li>Nowoczesne aplikacje SPA i PWA</li>
+                            <li>Systemy zarządzania treścią (CMS)</li>
+                            <li>Platformy e-commerce</li>
+                            <li>Integracje z systemami zewnętrznymi</li>
+                        </ul>
+                    </div>
+                    <div class="service-card-detail">
+                        <div class="card-title">Aplikacje Desktopowe</div>
+                        <ul class="feature-list">
+                            <li>Systemy zarządzania firmą (ERP/CRM)</li>
+                            <li>Aplikacje baz danych</li>
+                            <li>Narzędzia automatyzacji procesów</li>
+                            <li>Integracja z urządzeniami zewnętrznymi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title backup">System Backup & Recovery</h2>
+                <p>Kompleksowe rozwiązania zabezpieczania danych i odzyskiwania systemów po awariach. Zapewniamy pełną ochronę krytycznych danych biznesowych z możliwością szybkiego przywrócenia działania w przypadku awarii lub utraty danych.</p>
+                
+                <div class="services-grid">
+                    <div class="service-card-detail">
+                        <div class="card-title">Strategia Backup</div>
+                        <ul class="feature-list">
+                            <li>Analiza krytyczności danych i systemów</li>
+                            <li>Projektowanie strategii 3-2-1 backup</li>
+                            <li>Określenie RPO i RTO dla organizacji</li>
+                            <li>Harmonogramy i automatyzacja kopii</li>
+                        </ul>
+                    </div>
+                    <div class="service-card-detail">
+                        <div class="card-title">Technologie Backup</div>
+                        <ul class="feature-list">
+                            <li>Backup lokalny na dyski i taśmy LTO</li>
+                            <li>Replikacja w chmurę publiczną</li>
+                            <li>Snapshot systemów wirtualnych</li>
+                            <li>Backup aplikacji i baz danych</li>
+                        </ul>
+                    </div>
+                    <div class="service-card-detail">
+                        <div class="card-title">Disaster Recovery</div>
+                        <ul class="feature-list">
+                            <li>Plan odzyskiwania po awarii (DRP)</li>
+                            <li>Procedury Business Continuity</li>
+                            <li>Testowanie planów odzyskiwania</li>
+                            <li>Dokumentacja i szkolenia zespołu</li>
+                        </ul>
+                    </div>
+                    <div class="service-card-detail">
+                        <div class="card-title">Monitoring & Alerting</div>
+                        <ul class="feature-list">
+                            <li>Monitoring statusu kopii zapasowych</li>
+                            <li>Automatyczne alertowanie o problemach</li>
+                            <li>Raporty skuteczności backup</li>
+                            <li>Weryfikacja integralności danych</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <div class="highlight-title">Pełna Ochrona Danych Biznesowych</div>
+                    <p>Implementujemy rozwiązania backup zgodne z najlepszymi praktykami branżowymi, zapewniając RTO < 4 godziny i RPO < 1 godzina. Obsługujemy środowiska fizyczne, wirtualne i chmurowe z pełną integracją systemów monitoringu.</p>
+                </div>
+            </div>
+
+            <a href="index.html" class="back-button">← Powrót do strony głównej</a>
+        </div>
+
+        <footer class="footer">
+            <div class="contact-info">
+                <p>&copy; 2025 GREDA. Wszystkie prawa zastrzeżone.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

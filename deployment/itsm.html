@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITSM - System Monitoringu IT - GREDA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        .itsm-content {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(0, 10, 30, 0.5);
+            backdrop-filter: blur(3px);
+            border-radius: 20px;
+            box-shadow: 
+                0 0 30px rgba(65, 105, 225, 0.3),
+                inset 0 0 50px rgba(30, 144, 255, 0.1);
+            color: #fff;
+        }
+        .itsm-title {
+            font-size: 2.5rem;
+            color: #4169e1;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #4169e1;
+        }
+        .itsm-subtitle {
+            font-size: 1.3rem;
+            color: #87ceeb;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        .certification-badge {
+            background: linear-gradient(45deg, #1e90ff, #4169e1);
+            padding: 15px 25px;
+            border-radius: 30px;
+            text-align: center;
+            margin: 30px auto;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.5);
+            border: 2px solid rgba(135, 206, 235, 0.5);
+        }
+        .certification-badge h3 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        .service-section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(65, 105, 225, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            color: #1e90ff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title.monitoring::before { content: "📊"; margin-right: 10px; }
+        .section-title.prevention::before { content: "🛡️"; margin-right: 10px; }
+        .section-title.features::before { content: "⚙️"; margin-right: 10px; }
+        .section-title.benefits::before { content: "💎"; margin-right: 10px; }
+        .section-title.architecture::before { content: "🏗️"; margin-right: 10px; }
+        .section-title.support::before { content: "🎯"; margin-right: 10px; }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+            display: flex;
+            align-items: center;
+        }
+        .feature-list li::before {
+            content: "✓";
+            color: #00bfff;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        .monitoring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .monitoring-card {
+            background: rgba(30, 144, 255, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #1e90ff;
+            transition: all 0.3s ease;
+        }
+        .monitoring-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(30, 144, 255, 0.2);
+        }
+        .card-title {
+            font-size: 1.2rem;
+            color: #4169e1;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .metrics-showcase {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(0, 20, 50, 0.6);
+            border-radius: 15px;
+        }
+        .metric-item {
+            text-align: center;
+            padding: 15px;
+        }
+        .metric-value {
+            font-size: 2rem;
+            color: #00bfff;
+            font-weight: bold;
+            display: block;
+        }
+        .metric-label {
+            color: #87ceeb;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #4169e1, #1e90ff);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(65, 105, 225, 0.3);
+        }
+        @media (max-width: 768px) {
+            .itsm-content {
+                margin: 20px;
+                padding: 25px;
+            }
+            .itsm-title {
+                font-size: 2rem;
+            }
+            .monitoring-grid {
+                grid-template-columns: 1fr;
+            }
+            .metrics-showcase {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animowane tło kosmiczne -->
+    <div class="stars-background" id="starsBackground"></div>
+    
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <h1 class="company-name">GREDA</h1>
+                </div>
+            </div>
+        </header>
+
+        <div class="itsm-content">
+            <h1 class="itsm-title">ITSM</h1>
+            <p class="itsm-subtitle">System Monitoringu IT oraz wczesnego zapobiegania awariom</p>
+            
+            <div class="certification-badge">
+                <h3>🏆 Certyfikowany Specjalista Systemów Monitoringu</h3>
+                <p style="margin: 10px 0 0 0; font-size: 0.9rem; opacity: 0.9;">Certified Specialist - Enterprise Monitoring Solutions</p>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title monitoring">Zaawansowany Monitoring IT</h2>
+                <p>ITSM to kompleksowy system zarządzania usługami IT, który zapewnia ciągły monitoring infrastruktury oraz proaktywne zapobieganie awariom. Wykorzystujemy sprawdzone rozwiązania enterprise klasy, które monitorują każdy aspekt Twojej infrastruktury IT w czasie rzeczywistym.</p>
+                
+                <div class="metrics-showcase">
+                    <div class="metric-item">
+                        <span class="metric-value">99.9%</span>
+                        <div class="metric-label">Dostępność systemu</div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">24/7</span>
+                        <div class="metric-label">Monitoring ciągły</div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">< 30s</span>
+                        <div class="metric-label">Czas reakcji na alert</div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">1000+</span>
+                        <div class="metric-label">Monitorowanych urządzeń</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title prevention">Proaktywne Zapobieganie Awariom</h2>
+                <p>Nasz system nie tylko reaguje na problemy, ale przede wszystkim je przewiduje. Dzięki zaawansowanym algorytmom analizy trendów i uczenia maszynowego, jesteśmy w stanie wykryć potencjalne problemy na długo przed ich wystąpieniem.</p>
+                
+                <div class="monitoring-grid">
+                    <div class="monitoring-card">
+                        <div class="card-title">Analiza Predykcyjna</div>
+                        <p>Wykrywanie trendów i przewidywanie awarii na podstawie historycznych danych wydajności systemów.</p>
+                    </div>
+                    <div class="monitoring-card">
+                        <div class="card-title">Inteligentne Alerty</div>
+                        <p>Automatyczne powiadamianie o anomaliach z priorytetyzacją według krytyczności problemu.</p>
+                    </div>
+                    <div class="monitoring-card">
+                        <div class="card-title">Automatyzacja Procesów</div>
+                        <p>Samodzielne uruchamianie procedur naprawczych dla typowych problemów infrastrukturalnych.</p>
+                    </div>
+                    <div class="monitoring-card">
+                        <div class="card-title">Raportowanie Wykonawcze</div>
+                        <p>Szczegółowe raporty dla kierownictwa z analizą wydajności i rekomendacjami rozwoju.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title features">Kluczowe Funkcjonalności</h2>
+                <ul class="feature-list">
+                    <li>Monitoring serwerów fizycznych i wirtualnych (VMware, Hyper-V)</li>
+                    <li>Nadzór infrastruktury sieciowej (routery, switche, firewall)</li>
+                    <li>Monitoring aplikacji webowych i baz danych</li>
+                    <li>Kontrola systemów bezpieczeństwa i kopii zapasowych</li>
+                    <li>Monitoring środowiskowy (temperatura, wilgotność, zasilanie UPS)</li>
+                    <li>Integracja z systemami ticketowymi i CMDB</li>
+                    <li>Dashboardy w czasie rzeczywistym z możliwością personalizacji</li>
+                    <li>API REST do integracji z systemami zewnętrznymi</li>
+                    <li>Monitoring geograficznie rozproszonych lokalizacji</li>
+                    <li>Automatyczne odkrywanie nowych urządzeń w sieci</li>
+                </ul>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title architecture">Architektura Rozwiązania</h2>
+                <p>System oparty jest na sprawdzonej, skalowalnej architekturze enterprise, która obsługuje organizacje od kilkunastu do kilku tysięcy urządzeń. Architektura obejmuje:</p>
+                
+                <div class="monitoring-grid">
+                    <div class="monitoring-card">
+                        <div class="card-title">Serwer Centralny</div>
+                        <p>Główny węzeł przetwarzający dane z całej infrastruktury z redundancją i wysoką dostępnością.</p>
+                    </div>
+                    <div class="monitoring-card">
+                        <div class="card-title">Proxy Servers</div>
+                        <p>Rozproszone serwery proxy do monitoringu odległych lokalizacji i segmentów sieci.</p>
+                    </div>
+                    <div class="monitoring-card">
+                        <div class="card-title">Agenci Monitoringu</div>
+                        <p>Lekkie agenci instalowane na monitorowanych systemach dla szczegółowych metryk.</p>
+                    </div>
+                    <div class="monitoring-card">
+                        <div class="card-title">Baza Danych</div>
+                        <p>Wydajne rozwiązanie bazodanowe do przechowywania historycznych danych i trendów.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title benefits">Korzyści Biznesowe</h2>
+                <ul class="feature-list">
+                    <li>Redukcja przestojów systemów IT o 80-95%</li>
+                    <li>Skrócenie czasu rozwiązywania problemów o 70%</li>
+                    <li>Optymalizacja wykorzystania zasobów systemowych</li>
+                    <li>Compliance z normami ISO 20000 i ITIL</li>
+                    <li>Znaczne oszczędności kosztów operacyjnych IT</li>
+                    <li>Zwiększenie produktywności użytkowników końcowych</li>
+                    <li>Proaktywne planowanie rozwoju infrastruktury</li>
+                    <li>Automatyzacja rutynowych zadań administracyjnych</li>
+                </ul>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title support">Profesjonalne Wsparcie</h2>
+                <p>Jako Certyfikowany Specjalista systemów monitoringu enterprise, zapewniam pełne wsparcie techniczne obejmujące:</p>
+                <ul class="feature-list">
+                    <li>Projektowanie architektury systemu dopasowanej do specyfiki organizacji</li>
+                    <li>Profesjonalne wdrożenie z migracją z istniejących rozwiązań</li>
+                    <li>Szkolenia administratorów i użytkowników końcowych</li>
+                    <li>Wsparcie 24/7 z gwarantowanym czasem reakcji</li>
+                    <li>Regularne aktualizacje i optymalizacje systemu</li>
+                    <li>Consulting w zakresie best practices ITSM</li>
+                    <li>Audyty bezpieczeństwa i wydajności systemu</li>
+                    <li>Planowanie disaster recovery i business continuity</li>
+                </ul>
+            </div>
+
+            <a href="index.html" class="back-button">← Powrót do strony głównej</a>
+        </div>
+
+        <footer class="footer">
+            <div class="contact-info">
+                <p>&copy; 2025 GREDA. Wszystkie prawa zastrzeżone.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
