@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Zamówienie {{ order.order_number }} - ERP/CRM{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-cart me-2"></i>Zamówienie {{ order.order_number }}</h2>
+    <a href="{{ url_for('sales.orders') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left me-1"></i>Powrót
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Szczegóły zamówienia</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tr>
+                        <th width="30%">Klient:</th>
+                        <td><a href="{{ url_for('crm.customer_detail', id=order.customer.id) }}">{{ order.customer.name }}</a></td>
+                    </tr>
+                    <tr>
+                        <th>Data zamówienia:</th>
+                        <td>{{ order.order_date.strftime('%d.%m.%Y %H:%M') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status:</th>
+                        <td>
+                            {% if order.status == 'pending' %}
+                                <span class="badge bg-warning">Oczekujące</span>
+                            {% elif order.status == 'confirmed' %}
+                                <span class="badge bg-info">Potwierdzone</span>
+                            {% elif order.status == 'shipped' %}
+                                <span class="badge bg-primary">Wysłane</span>
+                            {% elif order.status == 'delivered' %}
+                                <span class="badge bg-success">Dostarczone</span>
+                            {% else %}
+                                <span class="badge bg-danger">Anulowane</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% if order.notes %}
+                    <tr>
+                        <th>Notatki:</th>
+                        <td>{{ order.notes }}</td>
+                    </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i>Pozycje zamówienia</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Produkt</th>
+                                <th>Ilość</th>
+                                <th>Cena jedn.</th>
+                                <th>Wartość</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items %}
+                            <tr>
+                                <td><strong>{{ item.product.name }}</strong><br><small class="text-muted">SKU: {{ item.product.sku }}</small></td>
+                                <td>{{ item.quantity }} {{ item.product.unit }}</td>
+                                <td>{{ "%.2f"|format(item.unit_price) }} PLN</td>
+                                <td>{{ "%.2f"|format(item.subtotal) }} PLN</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3" class="text-end">Suma całkowita:</th>
+                                <th>{{ "%.2f"|format(order.total_amount) }} PLN</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-person me-2"></i>Dane klienta</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-1"><strong>{{ order.customer.name }}</strong></p>
+                <p class="mb-1 text-muted small">{{ order.customer.email }}</p>
+                <p class="mb-1 text-muted small">{{ order.customer.phone }}</p>
+                {% if order.customer.address %}
+                <hr>
+                <p class="mb-0 small">
+                    {{ order.customer.address }}<br>
+                    {{ order.customer.postal_code }} {{ order.customer.city }}<br>
+                    {{ order.customer.country }}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

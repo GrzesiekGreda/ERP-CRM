@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Faktura {{ invoice.invoice_number }} - ERP/CRM{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-file-earmark-text me-2"></i>Faktura {{ invoice.invoice_number }}</h2>
+    <div>
+        <button class="btn btn-primary" onclick="window.print()">
+            <i class="bi bi-printer me-1"></i>Drukuj
+        </button>
+        <a href="{{ url_for('invoices.invoice_list') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left me-1"></i>Powrót
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h5>Dane wystawcy</h5>
+                <p class="mb-1"><strong>Moja Firma Sp. z o.o.</strong></p>
+                <p class="mb-0 text-muted small">
+                    ul. Przykładowa 123<br>
+                    00-001 Warszawa<br>
+                    NIP: 123-456-78-90
+                </p>
+            </div>
+            <div class="col-md-6 text-end">
+                <h5>Dane nabywcy</h5>
+                <p class="mb-1"><strong>{{ invoice.order.customer.name }}</strong></p>
+                <p class="mb-0 text-muted small">
+                    {% if invoice.order.customer.address %}
+                    {{ invoice.order.customer.address }}<br>
+                    {{ invoice.order.customer.postal_code }} {{ invoice.order.customer.city }}<br>
+                    {% endif %}
+                    {% if invoice.order.customer.tax_id %}
+                    NIP: {{ invoice.order.customer.tax_id }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <th>Data wystawienia:</th>
+                        <td>{{ invoice.issue_date.strftime('%d.%m.%Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Termin płatności:</th>
+                        <td>{{ invoice.due_date.strftime('%d.%m.%Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Zamówienie:</th>
+                        <td><a href="{{ url_for('sales.order_detail', id=invoice.order.id) }}">{{ invoice.order.order_number }}</a></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6 text-end">
+                <h3>
+                    {% if invoice.status == 'paid' %}
+                        <span class="badge bg-success">OPŁACONA</span>
+                    {% elif invoice.status == 'partial' %}
+                        <span class="badge bg-info">CZĘŚCIOWO OPŁACONA</span>
+                    {% elif invoice.is_overdue %}
+                        <span class="badge bg-danger">PRZETERMINOWANA</span>
+                    {% else %}
+                        <span class="badge bg-warning">NIEOPŁACONA</span>
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+
+        <div class="table-responsive mb-4">
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th>Lp.</th>
+                        <th>Nazwa produktu</th>
+                        <th>Ilość</th>
+                        <th>Cena jedn.</th>
+                        <th class="text-end">Wartość</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in invoice.order.items %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }} {{ item.product.unit }}</td>
+                        <td>{{ "%.2f"|format(item.unit_price) }} PLN</td>
+                        <td class="text-end">{{ "%.2f"|format(item.subtotal) }} PLN</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot class="table-light">
+                    <tr>
+                        <th colspan="4" class="text-end">Suma netto:</th>
+                        <th class="text-end">{{ "%.2f"|format(invoice.total_amount / 1.23) }} PLN</th>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="text-end">VAT 23%:</th>
+                        <th class="text-end">{{ "%.2f"|format(invoice.total_amount - (invoice.total_amount / 1.23)) }} PLN</th>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="text-end">Suma brutto:</th>
+                        <th class="text-end">{{ "%.2f"|format(invoice.total_amount) }} PLN</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Zapłacono:</strong> {{ "%.2f"|format(invoice.paid_amount) }} PLN</p>
+                <p><strong>Do zapłaty:</strong> {{ "%.2f"|format(invoice.balance) }} PLN</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <p class="mb-0 small text-muted">
+                    Faktura wygenerowana automatycznie przez system ERP/CRM
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@media print {
+    .btn, .sidebar, nav { display: none !important; }
+    .card { border: none !important; }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Nowe zamówienie - ERP/CRM{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h2><i class="bi bi-cart-plus me-2"></i>Nowe zamówienie</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="POST" id="orderForm">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="customer_id" class="form-label">Klient <span class="text-danger">*</span></label>
+                    <select class="form-select" id="customer_id" name="customer_id" required>
+                        <option value="">Wybierz klienta...</option>
+                        {% for customer in customers %}
+                        <option value="{{ customer.id }}">{{ customer.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="pending" selected>Oczekujące</option>
+                        <option value="confirmed">Potwierdzone</option>
+                        <option value="shipped">Wysłane</option>
+                        <option value="delivered">Dostarczone</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="notes" class="form-label">Notatki</label>
+                <textarea class="form-control" id="notes" name="notes" rows="2"></textarea>
+            </div>
+
+            <hr>
+
+            <h5 class="mb-3">Pozycje zamówienia</h5>
+            <div id="orderItems">
+                <div class="row mb-2 order-item">
+                    <div class="col-md-5">
+                        <select class="form-select product-select" name="product_id[]" required>
+                            <option value="">Wybierz produkt...</option>
+                            {% for product in products %}
+                            <option value="{{ product.id }}" data-price="{{ product.price }}">{{ product.name }} ({{ product.sku }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" class="form-control quantity-input" name="quantity[]" placeholder="Ilość" min="1" value="1" required>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" step="0.01" class="form-control price-input" name="unit_price[]" placeholder="Cena" min="0" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger btn-sm remove-item" style="display:none;">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-secondary btn-sm mb-4" id="addItem">
+                <i class="bi bi-plus-circle me-1"></i>Dodaj pozycję
+            </button>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0">Suma całkowita: <span id="totalAmount">0.00</span> PLN</h5>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle me-1"></i>Zapisz zamówienie
+                </button>
+                <a href="{{ url_for('sales.orders') }}" class="btn btn-secondary">
+                    <i class="bi bi-x-circle me-1"></i>Anuluj
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const orderItems = document.getElementById('orderItems');
+    const addItemBtn = document.getElementById('addItem');
+    const totalAmountSpan = document.getElementById('totalAmount');
+
+    // Add new order item
+    addItemBtn.addEventListener('click', function() {
+        const firstItem = orderItems.querySelector('.order-item');
+        const newItem = firstItem.cloneNode(true);
+        newItem.querySelector('.product-select').value = '';
+        newItem.querySelector('.quantity-input').value = '1';
+        newItem.querySelector('.price-input').value = '';
+        newItem.querySelector('.remove-item').style.display = 'inline-block';
+        orderItems.appendChild(newItem);
+        updateRemoveButtons();
+        calculateTotal();
+    });
+
+    // Remove order item
+    orderItems.addEventListener('click', function(e) {
+        if (e.target.closest('.remove-item')) {
+            e.target.closest('.order-item').remove();
+            updateRemoveButtons();
+            calculateTotal();
+        }
+    });
+
+    // Auto-fill price when product is selected
+    orderItems.addEventListener('change', function(e) {
+        if (e.target.classList.contains('product-select')) {
+            const selectedOption = e.target.options[e.target.selectedIndex];
+            const price = selectedOption.getAttribute('data-price');
+            const priceInput = e.target.closest('.order-item').querySelector('.price-input');
+            if (price && priceInput) {
+                priceInput.value = price;
+                calculateTotal();
+            }
+        }
+    });
+
+    // Calculate total on quantity/price change
+    orderItems.addEventListener('input', function(e) {
+        if (e.target.classList.contains('quantity-input') || e.target.classList.contains('price-input')) {
+            calculateTotal();
+        }
+    });
+
+    function updateRemoveButtons() {
+        const items = orderItems.querySelectorAll('.order-item');
+        items.forEach((item, index) => {
+            const removeBtn = item.querySelector('.remove-item');
+            removeBtn.style.display = items.length > 1 ? 'inline-block' : 'none';
+        });
+    }
+
+    function calculateTotal() {
+        let total = 0;
+        orderItems.querySelectorAll('.order-item').forEach(item => {
+            const quantity = parseFloat(item.querySelector('.quantity-input').value) || 0;
+            const price = parseFloat(item.querySelector('.price-input').value) || 0;
+            total += quantity * price;
+        });
+        totalAmountSpan.textContent = total.toFixed(2);
+    }
+
+    calculateTotal();
+});
+</script>
+{% endblock %}

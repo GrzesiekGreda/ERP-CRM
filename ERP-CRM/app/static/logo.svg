@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 120" width="300" height="120">
+  <defs>
+    <!-- Glow effect for text -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Neon glow for border -->
+    <filter id="neon">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Dark background -->
+  <rect width="300" height="120" fill="#0a0a0a" rx="15"/>
+  
+  <!-- Red neon border -->
+  <rect x="5" y="5" width="290" height="110" fill="none" stroke="#ff3333" stroke-width="3" rx="12" filter="url(#neon)" opacity="0.9"/>
+  <rect x="5" y="5" width="290" height="110" fill="none" stroke="#ff0000" stroke-width="1.5" rx="12"/>
+  
+  <!-- GREDA text with neon glow and red outline -->
+  <text x="150" y="75" font-family="Arial, sans-serif" font-size="48" font-weight="900" fill="black" stroke="#ff0000" stroke-width="2" text-anchor="middle" filter="url(#glow)" letter-spacing="8">GREDA</text>
+</svg>
