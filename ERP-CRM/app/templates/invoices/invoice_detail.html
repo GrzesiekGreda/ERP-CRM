@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block title %}Faktura {{ invoice.invoice_number }} - ERP/CRM{% endblock %}
 
@@ -19,24 +19,35 @@
     <div class="card-body">
         <div class="row mb-4">
             <div class="col-md-6">
-                <h5>Dane wystawcy</h5>
-                <p class="mb-1"><strong>Moja Firma Sp. z o.o.</strong></p>
+                <h5>Sprzedawca</h5>
+                {% if company %}
+                <p class="mb-1"><strong>{{ company.name }}</strong></p>
                 <p class="mb-0 text-muted small">
-                    ul. Przykładowa 123<br>
-                    00-001 Warszawa<br>
-                    NIP: 123-456-78-90
+                    {% if company.address %}{{ company.address }}<br>{% endif %}
+                    {% if company.postal_code or company.city %}{{ company.postal_code }} {{ company.city }}<br>{% endif %}
+                    {% if company.country and company.country != 'Polska' %}{{ company.country }}<br>{% endif %}
+                    {% if company.tax_id %}NIP: {{ company.tax_id }}<br>{% endif %}
+                    {% if company.phone %}Tel: {{ company.phone }}<br>{% endif %}
+                    {% if company.email %}Email: {{ company.email }}{% endif %}
                 </p>
+                {% else %}
+                <p class="text-muted small">
+                    <a href="{{ url_for('main.company_settings') }}" class="btn btn-sm btn-warning">
+                        <i class="bi bi-exclamation-triangle me-1"></i>Uzupełnij dane firmy
+                    </a>
+                </p>
+                {% endif %}
             </div>
             <div class="col-md-6 text-end">
-                <h5>Dane nabywcy</h5>
-                <p class="mb-1"><strong>{{ invoice.order.customer.name }}</strong></p>
+                <h5>Nabywca</h5>
+                <p class="mb-1"><strong>{{ invoice.customer.name }}</strong></p>
                 <p class="mb-0 text-muted small">
-                    {% if invoice.order.customer.address %}
-                    {{ invoice.order.customer.address }}<br>
-                    {{ invoice.order.customer.postal_code }} {{ invoice.order.customer.city }}<br>
+                    {% if invoice.customer.address %}
+                    {{ invoice.customer.address }}<br>
+                    {{ invoice.customer.postal_code }} {{ invoice.customer.city }}<br>
                     {% endif %}
-                    {% if invoice.order.customer.tax_id %}
-                    NIP: {{ invoice.order.customer.tax_id }}
+                    {% if invoice.customer.tax_id %}
+                    NIP: {{ invoice.customer.tax_id }}
                     {% endif %}
                 </p>
             </div>
@@ -52,10 +63,6 @@
                     <tr>
                         <th>Termin płatności:</th>
                         <td>{{ invoice.due_date.strftime('%d.%m.%Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th>Zamówienie:</th>
-                        <td><a href="{{ url_for('sales.order_detail', id=invoice.order.id) }}">{{ invoice.order.order_number }}</a></td>
                     </tr>
                 </table>
             </div>
@@ -74,40 +81,48 @@
             </div>
         </div>
 
+        {% if invoice.notes %}
+        <div class="alert alert-info">
+            <strong>Uwagi:</strong> {{ invoice.notes }}
+        </div>
+        {% endif %}
+
         <div class="table-responsive mb-4">
             <table class="table">
                 <thead class="table-light">
                     <tr>
                         <th>Lp.</th>
-                        <th>Nazwa produktu</th>
+                        <th>Nazwa towaru/usługi</th>
                         <th>Ilość</th>
-                        <th>Cena jedn.</th>
-                        <th class="text-end">Wartość</th>
+                        <th>Jedn.</th>
+                        <th class="text-end">Cena netto</th>
+                        <th class="text-center">VAT</th>
+                        <th class="text-end">Wartość netto</th>
+                        <th class="text-end">Wartość VAT</th>
+                        <th class="text-end">Wartość brutto</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in invoice.order.items %}
+                    {% for item in invoice.items %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td>{{ item.product.name }}</td>
-                        <td>{{ item.quantity }} {{ item.product.unit }}</td>
-                        <td>{{ "%.2f"|format(item.unit_price) }} PLN</td>
-                        <td class="text-end">{{ "%.2f"|format(item.subtotal) }} PLN</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ "%.2f"|format(item.quantity) }}</td>
+                        <td>{{ item.unit }}</td>
+                        <td class="text-end">{{ "%.2f"|format(item.unit_price) }} PLN</td>
+                        <td class="text-center">{{ item.vat_rate }}%</td>
+                        <td class="text-end">{{ "%.2f"|format(item.net_amount) }} PLN</td>
+                        <td class="text-end">{{ "%.2f"|format(item.vat_amount) }} PLN</td>
+                        <td class="text-end">{{ "%.2f"|format(item.gross_amount) }} PLN</td>
                     </tr>
                     {% endfor %}
                 </tbody>
                 <tfoot class="table-light">
                     <tr>
-                        <th colspan="4" class="text-end">Suma netto:</th>
-                        <th class="text-end">{{ "%.2f"|format(invoice.total_amount / 1.23) }} PLN</th>
-                    </tr>
-                    <tr>
-                        <th colspan="4" class="text-end">VAT 23%:</th>
-                        <th class="text-end">{{ "%.2f"|format(invoice.total_amount - (invoice.total_amount / 1.23)) }} PLN</th>
-                    </tr>
-                    <tr>
-                        <th colspan="4" class="text-end">Suma brutto:</th>
-                        <th class="text-end">{{ "%.2f"|format(invoice.total_amount) }} PLN</th>
+                        <th colspan="6" class="text-end">Razem:</th>
+                        <th class="text-end">{{ "%.2f"|format(invoice.total_net) }} PLN</th>
+                        <th class="text-end">{{ "%.2f"|format(invoice.total_vat) }} PLN</th>
+                        <th class="text-end">{{ "%.2f"|format(invoice.total_gross) }} PLN</th>
                     </tr>
                 </tfoot>
             </table>
@@ -115,8 +130,18 @@
 
         <div class="row">
             <div class="col-md-6">
+                <h5>Informacje o płatności</h5>
+                <p><strong>Do zapłaty:</strong> <span class="fs-4 text-primary">{{ "%.2f"|format(invoice.total_gross) }} PLN</span></p>
                 <p><strong>Zapłacono:</strong> {{ "%.2f"|format(invoice.paid_amount) }} PLN</p>
-                <p><strong>Do zapłaty:</strong> {{ "%.2f"|format(invoice.balance) }} PLN</p>
+                <p><strong>Pozostało:</strong> {{ "%.2f"|format(invoice.balance) }} PLN</p>
+                {% if company and company.bank_account %}
+                <hr>
+                <p class="mb-1"><strong>Numer konta:</strong></p>
+                <p class="mb-0">{{ company.bank_account }}</p>
+                {% if company.bank_name %}
+                <p class="mb-0 small text-muted">{{ company.bank_name }}</p>
+                {% endif %}
+                {% endif %}
             </div>
             <div class="col-md-6 text-end">
                 <p class="mb-0 small text-muted">

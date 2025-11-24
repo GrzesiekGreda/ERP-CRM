@@ -73,8 +73,8 @@ python run.py
 
 ## Domyślne dane logowania
 
-- **Email**: admin@example.com
-- **Hasło**: admin123
+- **Email**: grzegorz@greda.pl
+- **Hasło**: GREDA
 
 ## Struktura projektu
 
